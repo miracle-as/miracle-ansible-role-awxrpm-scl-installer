@@ -1,0 +1,22 @@
+galaxy_info:
+  author: Miracle Open Source
+  description: Install an scl version of awx
+  company: Miracle
+
+  license: GPLv2
+
+  min_ansible_version: 2.9
+
+  platforms:
+  - name: RedHat
+    versions:
+    - 8.4
+
+  galaxy_tags:
+  - root
+  - scl
+  - rpm
+  - turnkey
+  - awxrpm
+
+dependencies: []
