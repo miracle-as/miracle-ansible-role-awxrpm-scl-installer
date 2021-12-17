@@ -12,19 +12,16 @@
                 'redis',
                 'nginx',
                 'git',
-                'python3-virtualenv',
                 'gcc-c++',
                 'npm',
                 'device-mapper-persistent-data',
                 'lvm2',
                 'bzip2',
-                'python3-pip',
                 'ansible',
                 'gcc',
                 'openldap-devel',
                 'xmlsec1-openssl',
                 '@Development Tools',
-                'python3.8',
                 'ansible-collection-ansible-posix',
                 'supervisor'
                 
@@ -78,24 +75,6 @@
     mode: "u=rwx,g=rwx,o=r"
   become: yes
 
-- name: Create awx home
-  file:
-    path: /var/lib/awx
-    owner: awx
-    group: awx
-    state: directory
-    mode: "u=rwx,g=rwx,o=r"
-  become: yes
-
-- name: Git checkout awx
-  ansible.builtin.git:
-    repo: 'https://github.com/ansible/awx.git'
-    dest: /tmp/awx
-    version: "{{ awx_image_version }}"
-    force: True
-  become: True
-  become_user: awx
-
 - name: Recursively change ownership of the directory /etc/tower/conf.d
   ansible.builtin.file:
     path: /etc/tower/conf.d
@@ -106,38 +85,12 @@
   become: True
 
 
-- name: set owener /run/tower
+- name: set owner /run/tower
   ansible.builtin.file:
     path: /run/tower
     state: directory
     owner: awx
     group: nginx
-  become: True
-
-- name: Recursirely change ownership of the directory /tmp/awx
-  ansible.builtin.file:
-    path: /tmp/awx
-    state: directory
-    recurse: yes
-    owner: awx
-    group: awx
-  become: True
-
-- name:  create venv
-  ansible.builtin.pip:
-    requirements: /tmp/awx/requirements/requirements.txt
-    virtualenv: /var/awx/venv
-    virtualenv_command: /usr/bin/python3 -m venv
-  become: True
-
-- name: create checkplatform script
-  template:
-    src: checkplatform.sh.j2
-    dest: /usr/local/bin/checkplatform.sh
-    force: yes
-    mode: '0770'
-    owner: awx
-    group: awx
   become: True
 
 - name: Enable SELinux in enforcing mode
