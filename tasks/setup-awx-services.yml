@@ -1,3 +1,8 @@
-- name: setup-awx-services 
-  action: template src=dumpall.j2 dest=/tmp/ansible_dump.all
 
+- name: AWX RPM repo
+  yum_repository:
+    name: miracleawxrpm
+    description: Miracle supported AWX 
+    file: awxrpm
+    baseurl: http://repos.pip2scl.dk/AWX-RPM/RPMS
+    gpgcheck: no
