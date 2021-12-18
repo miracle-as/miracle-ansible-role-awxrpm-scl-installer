@@ -1,15 +1,3 @@
-- name: Install django-debug-toolbar 
-  ansible.builtin.command: /var/awx/venv/bin/pip install django-debug-toolbar
-  become: yes
-  args:
-    chdir:  /tmp/awx
-
-- name: Install django-rest-swagger
-  ansible.builtin.command: /var/awx/venv/bin/pip install django-rest-swagger
-  become: yes
-  args:
-    chdir:  /tmp/awx
-
 - name: Git checkout nodejs
   ansible.builtin.git:
     repo: 'https://github.com/nodejs/node.git'
