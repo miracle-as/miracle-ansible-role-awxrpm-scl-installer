@@ -12,7 +12,7 @@ Environment=PATH=/bin:/sbin:/usr/bin:/usr/sbin:/var/awx/venv/bin
 PermissionsStartOnly=true
 ExecStartpre=if [ ! -d /var/run/tower ]; then mkdir /var/run/tower; fi
 ExecStartpre=chown awx:awx /var/run/tower
-ExecStart=/var/awx/venv/bin/daphne -u /var/run/tower/daphne.sock awx.asgi:channel_layer
+ExecStart=scl enable miracle-awxrpm "daphne -u /var/run/tower/daphne.sock awx.asgi:channel_layer"
 Restart=on-failure
 RestartSec=2s
 

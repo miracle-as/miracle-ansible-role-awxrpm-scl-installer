@@ -38,7 +38,7 @@
     baseurl: http://repos.pip2scl.dk/AWX-RPM/RPMS
     gpgcheck: no
 
-- name: Install the latest version of Apache
+- name: Install the latest  miracle awxrpm
   yum:
     name: miracle-awxrpm-awx
     state: latest
