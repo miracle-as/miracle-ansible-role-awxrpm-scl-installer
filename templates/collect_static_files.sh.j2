@@ -11,6 +11,6 @@ else
     exit 1
 fi 
 
-source {{ awx_venv}}/bin/activate &&  umask 022 && echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'root@localhost', 'password')" | GIT_PYTHON_REFRESH=quiet awx-manage shell
-source {{ awx_venv}}/bin/activate &&  umask 022 && GIT_PYTHON_REFRESH=quiet awx-manage provision_instance --hostname=$(hostname)
-source {{ awx_venv}}/bin/activate &&  umask 022 && GIT_PYTHON_REFRESH=quiet awx-manage register_queue --queuename=tower --hostnames=$(hostname)
+umask 022 && echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'root@localhost', 'password')" | GIT_PYTHON_REFRESH=quiet scl enable miracle-awxrpm "awx-manage shell"
+umask 022 && GIT_PYTHON_REFRESH=quiet scl enable miracle-awxrpm "awx-manage provision_instance --hostname=$(hostname)"
+umask 022 && GIT_PYTHON_REFRESH=quiet scl enable miracle-awxrom "awx-manage "register_queue --queuename=tower --hostnames=$(hostname)"
