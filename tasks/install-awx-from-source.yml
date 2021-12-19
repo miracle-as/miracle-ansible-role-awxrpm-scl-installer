@@ -30,13 +30,18 @@
     group: root
   become: True
 
+- name: AWX RPM repo
+  yum_repository:
+    name: miracleawxrpm
+    description: Miracle supported AWX 
+    file: awxrpm
+    baseurl: http://repos.pip2scl.dk/AWX-RPM/RPMS
+    gpgcheck: no
 
-- name: Build AWX sdist
-  ansible.builtin.command: /usr/local/bin/build_awx_sdist.sh
-  args:
-    chdir:  /tmp/awx
-  become: True
-  
+- name: Install the latest version of Apache
+  yum:
+    name: miracle-awxrpm-awx
+    state: latest
   
 
 - name: Creates tower
@@ -329,16 +334,3 @@
     - awx-dispatcher
     - awx-web
     - awx-wsbroadcast
-
-
-- name: Run pip freeze
-  shell: /var/awx/venv/bin/pip freeze >/tmp/awxrpm.requirements.txt
-  become_user: awx
-  become: True
-
-- name: Collect the requirements.txt from the automated install
-  ansible.builtin.fetch:
-    src: /tmp/awxrpm.requirements.txt
-    dest: /tmp/awxrpm.requirements.txt
-    flat: yes
-  become: True
