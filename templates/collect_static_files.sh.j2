@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-source {{ awx_venv}}/bin/activate &&  umask 022 && awx-manage migrate
-source {{ awx_venv}}/bin/activate &&  umask 022 && awx-manage collectstatic --noinput --clear -v0
+umask 022 && scl enable miracle-awxrpm "awx-manage migrate"
+umask 022 && scl enable miracle-awxrpm "awx-manage collectstatic --noinput --clear -v0"
 if [[ $? == 0 ]];
 then
     echo "Static files exported"
