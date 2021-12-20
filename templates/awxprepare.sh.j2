@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-GIT_PYTHON_REFRESH=quiet awx-manage migrate
-GIT_PYTHON_REFRESH=quiet awx-manage collectstatic --noinput --clear -v0
+GIT_PYTHON_REFRESH=quiet scl enable miracle-awxrpm "awx-manage migrate"
+GIT_PYTHON_REFRESH=quiet scl enable miracle-awxrpm "awx-manage collectstatic --noinput --clear -v0""
 echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'root@localhost', 'password')" | GIT_PYTHON_REFRESH=quiet scl enable miracle-awxrpm "awx-manage shell "
 GIT_PYTHON_REFRESH=quiet scl enable miracle-awxrpm "awx-manage provision_instance --hostname=$(hostname)"
 GIT_PYTHON_REFRESH=quiet scl enable miracle-awxrpm "awx-manage register_queue --queuename=tower --hostnames=$(hostname)"
