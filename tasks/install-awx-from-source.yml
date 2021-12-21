@@ -35,8 +35,8 @@
     name: miracleawxrpm
     description: Miracle supported AWX 
     file: awxrpm
-    baseurl: http://repos.pip2scl.dk/AWX-RPM/RPMS
-    gpgcheck: no
+    baseurl: https://rpm.miracle.dk/AWX-RPM/EL8/
+    gpgcheck: yes
 
 - name: Install the latest  miracle awxrpm
   yum:
