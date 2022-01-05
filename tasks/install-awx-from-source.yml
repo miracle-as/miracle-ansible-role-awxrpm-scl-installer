@@ -35,7 +35,7 @@
     name: miracleawxrpm
     description: Miracle supported AWX 
     file: awxrpm
-    baseurl: https://rpm.miracle.dk/AWX-RPM/EL8/
+    baseurl: https://rpm.miracle.dk/AWX-RPM/EL8/RPMS
     gpgcheck: yes
   become: True
 
