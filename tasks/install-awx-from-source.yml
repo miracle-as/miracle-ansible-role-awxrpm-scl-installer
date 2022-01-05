@@ -37,11 +37,13 @@
     file: awxrpm
     baseurl: https://rpm.miracle.dk/AWX-RPM/EL8/
     gpgcheck: yes
+  become: True
 
 - name: Install the latest  miracle awxrpm
   yum:
     name: miracle-awxrpm-awx
     state: latest
+  become: True
   
 
 - name: Creates tower
