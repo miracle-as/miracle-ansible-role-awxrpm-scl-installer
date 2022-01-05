@@ -10,7 +10,7 @@
     chdir:  /tmp/nodejs
 
 - name: compile nodejs
-  ansible.builtin.command: make -j 5
+  ansible.builtin.command: make -j 3
   args:
     chdir:  /tmp/nodejs
 
