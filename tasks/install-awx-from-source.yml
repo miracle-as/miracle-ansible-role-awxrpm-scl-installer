@@ -1,24 +1,29 @@
-- name: Git checkout nodejs
-  ansible.builtin.git:
-    repo: 'https://github.com/nodejs/node.git'
-    dest: /tmp/nodejs
-    version: '{{ nodejsversion }}'
+#- name: Git checkout nodejs
+#  ansible.builtin.git:
+#    repo: 'https://github.com/nodejs/node.git'
+#    dest: /tmp/nodejs
+#    version: '{{ nodejsversion }}'
 
-- name: Configure nodejs
-  ansible.builtin.command: ./configure
-  args:
-    chdir:  /tmp/nodejs
+#- name: Configure nodejs
+#  ansible.builtin.command: ./configure
+#  args:
+#    chdir:  /tmp/nodejs
 
-- name: compile nodejs
-  ansible.builtin.command: make -j 3
-  args:
-    chdir:  /tmp/nodejs
+#- name: compile nodejs
+#  ansible.builtin.command: make -j 3
+#  args:
+#    chdir:  /tmp/nodejs
 
-- name: Copy node binary
-  ansible.builtin.command: cp node /usr/bin/node
-  args:
-    chdir:  /tmp/nodejs
-  become: True
+#- name: Copy node binary
+#  ansible.builtin.command: cp node /usr/bin/node
+#  args:
+#    chdir:  /tmp/nodejs
+#  become: True
+
+- name: Install nodejs
+  dnf: 
+    pkg: '@nodejs:{{ nodejsversion }}/common'
+  when: ansible_facts['os_family'] == 'RedHat'
 
 - name: Copy the build script
   template:
@@ -36,12 +41,12 @@
     description: Miracle supported AWX 
     file: awxrpm
     baseurl: https://rpm.miracle.dk/AWX-RPM/EL8/RPMS
-    gpgcheck: yes
+    gpgcheck: no
   become: True
 
 - name: Install the latest  miracle awxrpm
   yum:
-    name: miracle-awxrpm-awx
+    name: miracle-awxrpm
     state: latest
   become: True
   
