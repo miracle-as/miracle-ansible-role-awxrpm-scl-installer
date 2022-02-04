@@ -1,25 +1,3 @@
-#- name: Git checkout nodejs
-#  ansible.builtin.git:
-#    repo: 'https://github.com/nodejs/node.git'
-#    dest: /tmp/nodejs
-#    version: '{{ nodejsversion }}'
-
-#- name: Configure nodejs
-#  ansible.builtin.command: ./configure
-#  args:
-#    chdir:  /tmp/nodejs
-
-#- name: compile nodejs
-#  ansible.builtin.command: make -j 3
-#  args:
-#    chdir:  /tmp/nodejs
-
-#- name: Copy node binary
-#  ansible.builtin.command: cp node /usr/bin/node
-#  args:
-#    chdir:  /tmp/nodejs
-#  become: True
-
 - name: Install nodejs
   dnf: 
     pkg: '@nodejs:{{ nodejsversion }}/common'
