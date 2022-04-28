@@ -17,7 +17,6 @@
                 'device-mapper-persistent-data',
                 'lvm2',
                 'bzip2',
-                'ansible',
                 'gcc',
                 'openldap-devel',
                 'xmlsec1-openssl',
