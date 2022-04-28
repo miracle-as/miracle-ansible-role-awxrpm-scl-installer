@@ -130,7 +130,7 @@
 - name: Enable SELinux in enforcing mode
   selinux:
     policy: targeted
-    state: permissive
+    state: {{ selinuxstate }}
   become: True
 
 - name: adding nginx to group awx
