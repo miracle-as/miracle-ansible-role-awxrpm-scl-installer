@@ -26,7 +26,7 @@
                 'binutils',
                 'bison',
                 'flex',
-                'gcc,
+                'gcc',
                 'gcc-c++',
                 'gdb',
                 'glibc-devel',
