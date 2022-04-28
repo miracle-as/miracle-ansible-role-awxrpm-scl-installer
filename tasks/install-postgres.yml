@@ -3,7 +3,9 @@
     name: postgresql 
     state: stopped
     enabled: yes
-  become: True   
+  become: True  
+  when: "'docker' in services"
+
 
 - name: Install PostgreSQL
   dnf:
