@@ -4,7 +4,7 @@
     state: stopped
     enabled: yes
   become: True  
-  when: "'docker' in services"
+  when: "'postgresql' in services"
 
 
 - name: Install PostgreSQL
