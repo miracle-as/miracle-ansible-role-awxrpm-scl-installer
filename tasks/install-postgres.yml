@@ -1,39 +1,29 @@
-- name: Add pg12 repo
-  ansible.builtin.shell:
-    cmd: yum -y install https://download.postgresql.org/pub/repos/yum/reporpms/EL-8-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-  become: True
-
-- name:  disable pg
-  ansible.builtin.shell:
-    cmd:  dnf -qy module disable postgresql
-  become: True
-
-- name:  install pg 12
-  ansible.builtin.shell:
-    cmd:  dnf -y install postgresql12 postgresql12-server
-  become: True
-
 - name: Stop service postgres, if not stopped
   ansible.builtin.service:
-    name: postgresql-12 
+    name: postgresql 
     state: stopped
     enabled: yes
   become: True   
 
+- name: Install PostgreSQL
+  dnf:
+    pkg: '@postgresql:{{ postgresqlversion }}/server'
+  become: True
+
 - name: destroy database
   ansible.builtin.shell:
-    cmd: rm -fr  /var/lib/pgsql/12/data/
+    cmd: rm -fr /var/lib/pgsql/data/
   become: True
   
   
 - name: "are we new"
-  find: paths=/var/lib/pgsql/12/data/ file_type=directory patterns="*"
+  find: paths=/var/lib/pgsql/data/ file_type=directory patterns="*"
   register: dir_files
   become: True
 
 - name:  run initdb
   ansible.builtin.shell:
-    cmd: /usr/pgsql-12/bin/postgresql-12-setup initdb
+    cmd: /usr/bin/postgresql-setup initdb
   when: dir_files.matched|int == 0
   become: True
 
@@ -43,12 +33,16 @@
 
 - name: Start service postgres, if not started
   ansible.builtin.service:
-    name: postgresql-12 
+    name: postgresql 
     state: started
     enabled: yes
   become: True   
 
-- name:  run  create postgres user
+- name: Pause for 5 seconds to settle
+  pause:
+    seconds: 5
+
+- name: run create postgres user
   ansible.builtin.shell:
     cmd: createuser awx
   when: dir_files.matched|int == 0
@@ -72,7 +66,7 @@
 - name: create postgress access
   ansible.builtin.template:
     src: templates/pg_hba.conf.j2
-    dest: /var/lib/pgsql/12/data/pg_hba.conf
+    dest: /var/lib/pgsql/data/pg_hba.conf
     owner: postgres
     group: postgres
     mode: '0600'
@@ -80,7 +74,7 @@
 
 - name: Restart service postgres, if not restarted
   ansible.builtin.service:
-    name: postgresql-12 
+    name: postgresql 
     state: restarted
     enabled: yes
   become: True   
