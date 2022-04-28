@@ -1,11 +1,14 @@
+- name: Check if postgres Service Exists
+  stat: path=/usr/lib/systemd/system/postgresql.service
+  register: service_status
+
 - name: Stop service postgres, if not stopped
   ansible.builtin.service:
     name: postgresql 
     state: stopped
     enabled: yes
   become: True  
-  when: "'postgresql' in services"
-
+  when: service_status.stat.exists
 
 - name: Install PostgreSQL
   dnf:
