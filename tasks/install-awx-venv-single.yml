@@ -3,7 +3,6 @@
 # worker daemons) to a single server.
 
 - name: "Define role discovered variables, usable throughout the playbook"
-  hosts: tower:automationhub:database:instance_group_*
   any_errors_fatal: true
   gather_facts: false
   roles:
