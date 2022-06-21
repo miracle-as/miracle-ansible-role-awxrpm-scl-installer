@@ -11,5 +11,5 @@
   import_tasks: nginx.yml
 
 - name: setup awx services
-  import_tasks: install-awx-from-source.yml
+  import_tasks: install-awx-venv-single.yml
 
